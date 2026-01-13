@@ -1,0 +1,47 @@
+.chatbot-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #F9FAFB;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    /* Custom scrollbar styling */
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #F1F1F1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #C1C1C1;
+        border-radius: 4px;
+
+        &:hover {
+            background: #A8A8A8;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .chat-messages {
+        padding: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .chatbot-container {
+        max-width: 100%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+}

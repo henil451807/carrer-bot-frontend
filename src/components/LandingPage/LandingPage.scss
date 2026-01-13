@@ -1,0 +1,315 @@
+// Landing Page Styles
+.landing-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6B46C1 0%, #7C3AED 50%, #8B5CF6 100%);
+    overflow-x: hidden;
+}
+
+// Navigation
+.landing-nav {
+    padding: 20px 0;
+    position: relative;
+    z-index: 100;
+
+    .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 24px;
+        font-weight: 700;
+        color: #FFFFFF;
+        cursor: pointer;
+
+        .logo-icon {
+            font-size: 32px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+        }
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #FFFFFF;
+        }
+    }
+
+    .try-it-nav {
+        background: #FFFFFF;
+        color: #6B46C1;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+// Hero Section
+.hero-section {
+    padding: 80px 0 100px;
+    position: relative;
+
+    .hero-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .hero-content {
+        color: #FFFFFF;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 10px 20px;
+        border-radius: 50px;
+        margin-bottom: 32px;
+        font-size: 14px;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        .badge-icon {
+            font-size: 16px;
+        }
+
+        .badge-text {
+            color: #FFFFFF;
+        }
+    }
+
+    .hero-title {
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0 0 24px 0;
+        color: #FFFFFF;
+
+        .title-highlight {
+            color: #FFFFFF;
+            opacity: 0.95;
+        }
+    }
+
+    .hero-description {
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 0 0 40px 0;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+    }
+
+    .cta-button {
+        background: #FFFFFF;
+        color: #6B46C1;
+        border: none;
+        padding: 16px 40px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+        .arrow-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+
+            .arrow-icon {
+                transform: translateX(4px);
+            }
+        }
+
+        &:active {
+            transform: translateY(-1px);
+        }
+    }
+
+    .hero-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        .mockup-img {
+            width: 100%;
+            max-width: 550px;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+            animation: float 6s ease-in-out infinite;
+        }
+    }
+}
+
+// Floating animation
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+    .hero-section {
+        .hero-container {
+            gap: 40px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .landing-nav {
+        .nav-container {
+            padding: 0 20px;
+        }
+
+        .nav-right {
+            gap: 16px;
+
+            .nav-link {
+                display: none;
+            }
+        }
+
+        .logo {
+            .logo-text {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .hero-section {
+        padding: 40px 0 60px;
+
+        .hero-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero-badge {
+            font-size: 12px;
+            padding: 8px 16px;
+        }
+
+        .hero-title {
+            font-size: 36px;
+
+            br {
+                display: none;
+            }
+        }
+
+        .hero-description {
+            font-size: 16px;
+            margin: 0 auto 32px;
+
+            br {
+                display: none;
+            }
+        }
+
+        .cta-button {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
+
+        .hero-image {
+            order: -1;
+
+            .mockup-img {
+                max-width: 400px;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        .hero-title {
+            font-size: 32px;
+        }
+
+        .hero-description {
+            font-size: 14px;
+        }
+
+        .hero-image {
+            .mockup-img {
+                max-width: 300px;
+            }
+        }
+    }
+}
