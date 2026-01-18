@@ -3,6 +3,8 @@ export interface Message {
   text: string;
   sender: "bot" | "user";
   timestamp: Date;
+  role: string;
+  message: string;
 }
 
 export interface ChatState {
@@ -34,15 +36,15 @@ export interface SendChatMessage {
   };
 }
 
+export interface ChatMessageItem {
+  role: "user" | "assistant";
+  message: string;
+}
+
 export interface ChatDetails {
   title: string;
   chat_group_id: string;
-  messages: Array<Message>;
-}
-
-export interface Message {
-  role: "user" | "assistant";
-  message: string;
+  messages: Array<ChatMessageItem>;
 }
 
 export interface ChatHistoryItem {

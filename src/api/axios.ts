@@ -6,7 +6,7 @@ declare module "axios" {
 }
 
 const axiosWrapper = axios.create({
-  baseURL: "https://ricky-nonderisive-vivaciously.ngrok-free.dev/api",
+  baseURL: "https://career-bot-api-ct5m.onrender.com/api",
 });
 
 axiosWrapper.interceptors.request.use((config) => {

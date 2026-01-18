@@ -14,19 +14,22 @@ const initialMessages: Message[] = [
         text: "Welcome to Career Bot! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
         sender: 'bot',
         timestamp: new Date(),
+        role: 'user',
+        message: ''
     },
     {
         id: '2',
         text: "To get started, feel free to ask me anything about careers, education, or professional development. What would you like to know?",
         sender: 'bot',
         timestamp: new Date(),
+        role: 'user',
+        message: ''
     },
 ];
 
 const ChatBot: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [isTyping, setIsTyping] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -45,11 +48,12 @@ const ChatBot: React.FC = () => {
             text,
             sender: 'user',
             timestamp: new Date(),
+            role: 'user',
+            message: ''
         };
 
         setMessages((prev) => [...prev, userMessage]);
         setIsTyping(true);
-        setError(null);
 
         try {
             // Call backend API
@@ -62,6 +66,8 @@ const ChatBot: React.FC = () => {
                     text: response.response,
                     sender: 'bot',
                     timestamp: new Date(response.timestamp),
+                    role: 'user',
+                    message: ''
                 };
 
                 setMessages((prev) => [...prev, botResponse]);
@@ -73,10 +79,11 @@ const ChatBot: React.FC = () => {
                 text: "Sorry, I'm having trouble connecting to the server. Please make sure the backend is running and try again.",
                 sender: 'bot',
                 timestamp: new Date(),
+                role: 'user',
+                message: ''
             };
 
             setMessages((prev) => [...prev, errorMessage]);
-            setError('Failed to get response from server');
             console.error('Error sending message:', err);
         } finally {
             setIsTyping(false);

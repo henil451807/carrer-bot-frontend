@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Message } from '../../types/chat.types';
+import type { Message } from '../../../types/chat.types.ts';
 import './MessageBubble.scss';
 
 interface MessageBubbleProps {
