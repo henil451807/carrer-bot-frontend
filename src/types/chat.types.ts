@@ -1,11 +1,54 @@
 export interface Message {
-    id: string;
-    text: string;
-    sender: 'bot' | 'user';
-    timestamp: Date;
+  id: string;
+  text: string;
+  sender: "bot" | "user";
+  timestamp: Date;
 }
 
 export interface ChatState {
-    messages: Message[];
-    isTyping: boolean;
+  messages: Message[];
+  isTyping: boolean;
+}
+
+export interface SendChatMessagePayload {
+  chat_group_id: string | null;
+  isNewChat: boolean;
+  message: string;
+}
+
+export interface SendChatMessage {
+  chat_group_id: string;
+  user_message: {
+    id: string;
+    chat_group_id: string;
+    role: string;
+    message: string;
+    created_at: string;
+  };
+  assistant_message: {
+    id: string;
+    chat_group_id: string;
+    role: string;
+    message: string;
+    created_at: string;
+  };
+}
+
+export interface ChatDetails {
+  title: string;
+  chat_group_id: string;
+  messages: Array<Message>;
+}
+
+export interface Message {
+  role: "user" | "assistant";
+  message: string;
+}
+
+export interface ChatHistoryItem {
+  id: string;
+  chat_group_id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
 }

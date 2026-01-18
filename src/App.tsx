@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.scss";
-import ChatBot from "./components/ChatBot/ChatBot";
+import { AuthProvider } from "./auth/AuthProvider";
+import ChatPage from "./components/Chat/ChatPage";
 import LandingPage from "./components/LandingPage/LandingPage";
 import LoginPage from "./components/Login/LoginPage";
 import SignupPage from "./components/Signup/SignupPage";
-import { AuthProvider } from "./auth/AuthProvider";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { PublicRoute } from "./routes/PublicRoute";
 
@@ -36,7 +36,15 @@ const App: React.FC = () => {
             path="/chat"
             element={
               <ProtectedRoute>
-                <ChatBot />
+                <ChatPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chat/:chatId"
+            element={
+              <ProtectedRoute>
+                <ChatPage />
               </ProtectedRoute>
             }
           />
