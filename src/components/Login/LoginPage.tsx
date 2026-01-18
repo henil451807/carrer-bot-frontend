@@ -83,7 +83,7 @@ const LoginPage: React.FC = () => {
         password: formData.password,
       });
       if (res.data?.token) {
-        login(res.data?.token);
+        await login(res.data?.token);
         navigate("/chat");
       }
     } catch (error: unknown) {

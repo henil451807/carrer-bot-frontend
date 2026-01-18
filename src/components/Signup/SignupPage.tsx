@@ -151,7 +151,7 @@ const SignupPage: React.FC = () => {
       const res = await authApi.userRegistration(payload);
 
       if (res.data) {
-        login(res.data.token);
+        await login(res.data.token);
       }
 
       // Move to OTP step

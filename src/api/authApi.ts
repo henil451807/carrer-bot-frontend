@@ -3,6 +3,7 @@ import type {
   RegisterRequest,
   RegisterResponse,
 } from "../types/auth.types";
+import type { User } from "../types/user.types";
 import axiosWrapper from "./axios";
 
 class AuthApi {
@@ -27,6 +28,16 @@ class AuthApi {
     const response = await axiosWrapper.post(`/auth/register`, payload, {
       skipAuthRedirect: true,
     });
+    return response.data;
+  }
+
+  async getUser(): Promise<{
+    error: boolean;
+    message: string;
+    status: number;
+    data?: User;
+  }> {
+    const response = await axiosWrapper.get(`/user/profile`);
     return response.data;
   }
 }

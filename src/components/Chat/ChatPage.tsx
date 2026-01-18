@@ -12,7 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import chatApi from "../../api/chatApi";
 import { useAuth } from "../../auth/useAuth";
 import type { ChatHistoryItem } from "../../types/chat.types";
-import "./CareerBot.scss";
+import "./ChatPage.scss";
 
 interface Message {
   message: string;
@@ -43,7 +43,7 @@ const initialMessages: Message[] = [
 const ChatPage: React.FC = () => {
   const navigate = useNavigate();
   const { chatId } = useParams<{ chatId?: string }>();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputMessage, setInputMessage] = useState<string>("");
@@ -52,7 +52,7 @@ const ChatPage: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<ChatHistoryItem[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [pageTitle, setPageTitle] = useState<string>("Career Guidance Chat");
-  const [userName] = useState<string>("John Doe");
+  const [userName] = useState<string>(user?.firstName || "User");
 
   // New loading and error states
   const [chatLoadingState, setChatLoadingState] =
@@ -242,9 +242,9 @@ const ChatPage: React.FC = () => {
   };
 
   const handleLogout = (): void => {
-    if (window.confirm("Are you sure you want to logout?")) {
-      logout();
-    }
+    // if (window.confirm("Are you sure you want to logout?")) {
+    logout();
+    // }
   };
 
   const toggleSidebar = (): void => {
@@ -380,7 +380,7 @@ const ChatPage: React.FC = () => {
                 aria-label="Logout"
                 title="Logout"
               >
-                🚪
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWxvZy1vdXQtaWNvbiBsdWNpZGUtbG9nLW91dCI+PHBhdGggZD0ibTE2IDE3IDUtNS01LTUiLz48cGF0aCBkPSJNMjEgMTJIOSIvPjxwYXRoIGQ9Ik05IDIxSDVhMiAyIDAgMCAxLTItMlY1YTIgMiAwIDAgMSAyLTJoNCIvPjwvc3ZnPg==" />
               </button>
             </div>
           </div>
