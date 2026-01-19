@@ -5,8 +5,11 @@ declare module "axios" {
   }
 }
 
+// const axiosWrapper = axios.create({
+//   baseURL: "https://career-bot-api-ct5m.onrender.com/api",
+// });
 const axiosWrapper = axios.create({
-  baseURL: "https://career-bot-api-ct5m.onrender.com/api",
+  baseURL: "http://localhost:8000/api",
 });
 
 axiosWrapper.interceptors.request.use((config) => {

@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.scss";
 import { AuthProvider } from "./auth/AuthProvider";
 import ChatPage from "./components/Chat/ChatPage";
-import LandingPage from "./components/LandingPage/LandingPage";
+// import LandingPage from "./components/LandingPage/LandingPage";
 import LoginPage from "./components/Login/LoginPage";
 import SignupPage from "./components/Signup/SignupPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
@@ -14,7 +14,16 @@ const App: React.FC = () => {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          {/* Landing page route commented out - now redirecting to chat */}
+          {/* <Route path="/" element={<LandingPage />} /> */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <ChatPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/login"
             element={
