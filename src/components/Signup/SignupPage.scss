@@ -113,37 +113,91 @@ body {
   }
 }
 
-/* Signup Header */
 .signup-header {
-  text-align: center;
-  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #ffffff;
+}
+
+.signup-header__row {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* vertical centering */
+  justify-content: space-between;
 }
 
 .signup-header__logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
+  height: 55px;
+  width: auto;
+  object-fit: contain;
 }
 
-.signup-header__icon {
-  width: 48px;
-  height: 48px;
-  background: #2b331f;
-  border-radius: 0.75rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+.signup-header__1m1b {
+  height: 75px;
+  width: auto;
+  object-fit: contain;
+}
+
+.signup-header__text {
+  text-align: center;
+  flex: 1;
+  /* ensures equal spacing */
 }
 
 .signup-header__title {
-  font-size: 1.875rem;
+  font-size: 36px;
   font-weight: 700;
-  color: #1f2937;
-  margin: 0 0 0.5rem 0;
+  color: #1f2a37;
+  margin: 0;
 }
+
+.signup-header__subtitle {
+  font-size: 18px;
+  color: #9ca3af;
+  margin-top: 10px;
+}
+
+/* Signup Header */
+// .signup-header {
+//   text-align: center;
+//   margin-bottom: 2rem;
+// }
+
+// .signup-header__title-row {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   gap: 1rem;
+//   margin-bottom: 0.5rem;
+//   max-width: 500px;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+
+// .signup-header__logo-img {
+//   height: 48px;
+//   width: auto;
+//   object-fit: contain;
+// }
+
+// .signup-header__logo-img:first-child {
+//   height: 64px;
+// }
+
+// .signup-header__logo-img:last-child {
+//   height: 36px;
+// }
+
+// .signup-header__title {
+//   font-size: 1.875rem;
+//   font-weight: 700;
+//   color: #1f2937;
+//   margin: 0;
+// }
 
 @media (min-width: 640px) {
   .signup-header__title {
@@ -154,8 +208,9 @@ body {
 .signup-header__subtitle {
   font-size: 0.875rem;
   color: #9ca3af;
-  margin: 0;
+  margin: 1rem 0 0 0;
   font-weight: 400;
+  text-align: center;
 }
 
 @media (min-width: 640px) {

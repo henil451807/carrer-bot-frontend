@@ -10,6 +10,7 @@ import ReactMarkdown from "react-markdown";
 import chatApi from "../../api/chatApi";
 import { useAuth } from "../../auth/useAuth";
 import "./ChatPage.scss";
+import botJyotiImage from "../../assets/Logo/BotJyoti.jpeg";
 
 interface Message {
   message: string;
@@ -141,7 +142,7 @@ const ChatPage: React.FC = () => {
         >
           <div className="sidebar-header">
             <div className="sidebar-header__logo">
-              <div className="sidebar-header__icon">🤖</div>
+              <img src={botJyotiImage} alt="Bot Jyoti" className="sidebar-header__icon" />
               <h2 className="sidebar-header__title">Career Bot</h2>
             </div>
           </div>
@@ -195,7 +196,11 @@ const ChatPage: React.FC = () => {
                     }`}
                 >
                   <div className="message__avatar">
-                    {message.role === "assistant" ? "🤖" : "👤"}
+                    {message.role === "assistant" ? (
+                      <img src={botJyotiImage} alt="Bot Jyoti" className="message__avatar-img" />
+                    ) : (
+                      "👤"
+                    )}
                   </div>
                   <div className="message__content">
                     <div className="message__bubble">
@@ -207,7 +212,9 @@ const ChatPage: React.FC = () => {
 
               {isTyping && (
                 <div className="typing-indicator">
-                  <div className="typing-indicator__avatar">🤖</div>
+                  <div className="typing-indicator__avatar">
+                    <img src={botJyotiImage} alt="Bot Jyoti" className="typing-indicator__avatar-img" />
+                  </div>
                   <div className="typing-indicator__dots">
                     <div className="typing-indicator__dot"></div>
                     <div className="typing-indicator__dot"></div>

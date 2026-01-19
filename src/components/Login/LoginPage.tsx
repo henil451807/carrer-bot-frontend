@@ -4,6 +4,8 @@ import "./LoginPage.scss";
 import authApi from "../../api/authApi";
 import { useAuth } from "../../auth/useAuth";
 import axios from "axios";
+import logo from "../../assets/Logo/1M1BLogo.png";
+import jobShipzLogo from "../../assets/Logo/JobShipzLogo.png";
 
 interface FormData {
   email: string;
@@ -63,18 +65,15 @@ const LoginPage: React.FC = () => {
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
-
     setIsLoading(true);
 
     try {
@@ -104,18 +103,17 @@ const LoginPage: React.FC = () => {
       <div className="login-container">
         <div className="login-background-circle login-background-circle--1"></div>
         <div className="login-background-circle login-background-circle--2"></div>
-
         <div className="login-card">
           <div className="login-header">
-            <div className="login-header__logo">
-              <div className="login-header__icon">🤖</div>
+            <div className="login-header__title-row">
+              <img src={logo} alt="1M1B Logo" className="login-header__logo-img" />
+              <h1 className="login-header__title">Career Bot</h1>
+              <img src={jobShipzLogo} alt="JobShipz Logo" className="login-header__logo-img" />
             </div>
-            <h1 className="login-header__title">Career Bot</h1>
             <p className="login-header__subtitle">
               Sign in to access your AI-powered career guidance
             </p>
           </div>
-
           <form onSubmit={handleSubmit} noValidate className="login-form">
             <div className="form-group">
               <label htmlFor="email" className="form-group__label">
@@ -126,9 +124,8 @@ const LoginPage: React.FC = () => {
                   type="email"
                   id="email"
                   name="email"
-                  className={`form-group__input ${
-                    errors.email ? "form-group__input--error" : ""
-                  }`}
+                  className={`form-group__input ${errors.email ? "form-group__input--error" : ""
+                    }`}
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
@@ -154,9 +151,8 @@ const LoginPage: React.FC = () => {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
-                  className={`form-group__input form-group__input--password ${
-                    errors.password ? "form-group__input--error" : ""
-                  }`}
+                  className={`form-group__input form-group__input--password ${errors.password ? "form-group__input--error" : ""
+                    }`}
                   placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
@@ -198,9 +194,8 @@ const LoginPage: React.FC = () => {
             <div className="login-actions">
               <button
                 type="submit"
-                className={`btn btn--primary ${
-                  isLoading ? "btn--loading" : ""
-                }`}
+                className={`btn btn--primary ${isLoading ? "btn--loading" : ""
+                  }`}
                 disabled={isLoading}
               >
                 {!isLoading && "Sign In"}

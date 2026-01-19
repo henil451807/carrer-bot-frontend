@@ -10,6 +10,8 @@ import authApi from "../../api/authApi";
 import { useAuth } from "../../auth/useAuth";
 import type { RegisterRequest } from "../../types/auth.types";
 import "./SignupPage.scss";
+import logo from "../../assets/Logo/1M1BLogo.png";
+import jobShipzLogo from "../../assets/Logo/JobShipzLogo.png";
 
 interface FormData {
   firstName: string;
@@ -316,15 +318,28 @@ const SignupPage: React.FC = () => {
         <div className="signup-card">
           {currentStep === "details" && (
             <>
-              <div className="signup-header">
-                <div className="signup-header__logo">
-                  <div className="signup-header__icon">🤖</div>
+                <div className="signup-header">
+                  <div className="signup-header__row">
+                    <img
+                      src={logo}
+                      alt="1M1B Logo"
+                      className="signup-header__1m1b"
+                    />
+
+                    <div className="signup-header__text">
+                      <h1 className="signup-header__title">Create Account</h1>
+                      <p className="signup-header__subtitle">
+                        Join thousands using AI-powered career guidance
+                      </p>
+                    </div>
+
+                    <img
+                      src={jobShipzLogo}
+                      alt="JobShipZ Logo"
+                      className="signup-header__logo"
+                    />
+                  </div>
                 </div>
-                <h1 className="signup-header__title">Create Account</h1>
-                <p className="signup-header__subtitle">
-                  Join thousands using AI-powered career guidance
-                </p>
-              </div>
 
               <form onSubmit={handleSubmit} noValidate className="signup-form">
                 <div className="form-row">
@@ -337,9 +352,8 @@ const SignupPage: React.FC = () => {
                         type="text"
                         id="firstName"
                         name="firstName"
-                        className={`form-group__input ${
-                          errors.firstName ? "form-group__input--error" : ""
-                        }`}
+                        className={`form-group__input ${errors.firstName ? "form-group__input--error" : ""
+                          }`}
                         placeholder="John"
                         value={formData.firstName}
                         onChange={handleChange}
@@ -370,9 +384,8 @@ const SignupPage: React.FC = () => {
                         type="text"
                         id="lastName"
                         name="lastName"
-                        className={`form-group__input ${
-                          errors.lastName ? "form-group__input--error" : ""
-                        }`}
+                        className={`form-group__input ${errors.lastName ? "form-group__input--error" : ""
+                          }`}
                         placeholder="Doe"
                         value={formData.lastName}
                         onChange={handleChange}
@@ -405,9 +418,8 @@ const SignupPage: React.FC = () => {
                         type="email"
                         id="email"
                         name="email"
-                        className={`form-group__input ${
-                          errors.email ? "form-group__input--error" : ""
-                        }`}
+                        className={`form-group__input ${errors.email ? "form-group__input--error" : ""
+                          }`}
                         placeholder="john.doe@example.com"
                         value={formData.email}
                         onChange={handleChange}
@@ -438,9 +450,8 @@ const SignupPage: React.FC = () => {
                         type="text"
                         id="mobileNo"
                         name="mobileNo"
-                        className={`form-group__input ${
-                          errors.mobileNo ? "form-group__input--error" : ""
-                        }`}
+                        className={`form-group__input ${errors.mobileNo ? "form-group__input--error" : ""
+                          }`}
                         placeholder="+919865894350"
                         value={formData.mobileNo}
                         onChange={handleChange}
@@ -505,9 +516,8 @@ const SignupPage: React.FC = () => {
                       type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
-                      className={`form-group__input form-group__input--password ${
-                        errors.password ? "form-group__input--error" : ""
-                      }`}
+                      className={`form-group__input form-group__input--password ${errors.password ? "form-group__input--error" : ""
+                        }`}
                       placeholder="Enter your password"
                       value={formData.password}
                       onChange={handleChange}
@@ -552,9 +562,8 @@ const SignupPage: React.FC = () => {
                       type={showConfirmPassword ? "text" : "password"}
                       id="confirmPassword"
                       name="confirmPassword"
-                      className={`form-group__input form-group__input--password ${
-                        errors.confirmPassword ? "form-group__input--error" : ""
-                      }`}
+                      className={`form-group__input form-group__input--password ${errors.confirmPassword ? "form-group__input--error" : ""
+                        }`}
                       placeholder="Confirm your password"
                       value={formData.confirmPassword}
                       onChange={handleChange}
@@ -600,9 +609,8 @@ const SignupPage: React.FC = () => {
                 <div className="signup-actions">
                   <button
                     type="submit"
-                    className={`btn btn--primary ${
-                      isLoading ? "btn--loading" : ""
-                    }`}
+                    className={`btn btn--primary ${isLoading ? "btn--loading" : ""
+                      }`}
                     disabled={isLoading}
                   >
                     {!isLoading && "Create Account"}
@@ -656,9 +664,8 @@ const SignupPage: React.FC = () => {
                     type="text"
                     inputMode="numeric"
                     maxLength={1}
-                    className={`otp-input ${
-                      otpError ? "otp-input--error" : ""
-                    }`}
+                    className={`otp-input ${otpError ? "otp-input--error" : ""
+                      }`}
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(index, e)}
@@ -677,9 +684,8 @@ const SignupPage: React.FC = () => {
 
               <div className="otp-actions">
                 <button
-                  className={`btn btn--primary ${
-                    isLoading ? "btn--loading" : ""
-                  }`}
+                  className={`btn btn--primary ${isLoading ? "btn--loading" : ""
+                    }`}
                   onClick={handleVerifyOtp}
                   disabled={isLoading || otp.join("").length !== otp.length}
                 >
