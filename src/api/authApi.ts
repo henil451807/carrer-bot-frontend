@@ -1,4 +1,5 @@
 import type {
+  GoogleSignupResponse,
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
@@ -38,6 +39,18 @@ class AuthApi {
     data?: User;
   }> {
     const response = await axiosWrapper.get(`/user/profile`);
+    return response.data;
+  }
+
+  async googleSignup(payload: { firebase_token: string }): Promise<{
+    error: boolean;
+    message: string;
+    status: number;
+    data?: GoogleSignupResponse;
+  }> {
+    const response = await axiosWrapper.post(`/auth/google/signup`, payload, {
+      skipAuthRedirect: true,
+    });
     return response.data;
   }
 }

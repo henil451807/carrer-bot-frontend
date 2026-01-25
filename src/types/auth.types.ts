@@ -23,3 +23,9 @@ export interface RegisterResponse {
   mobileNo: string;
   token: string;
 }
+
+export interface GoogleSignupResponse {
+  is_new_user: boolean;
+  token: string;
+  user: User;
+}

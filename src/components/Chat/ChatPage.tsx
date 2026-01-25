@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {
   useEffect,
   useRef,
@@ -8,13 +9,23 @@ import React, {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import chatApi from "../../api/chatApi";
-import { useAuth } from "../../auth/useAuth";
-import "./ChatPage.scss";
 import botJyotiImage from "../../assets/Logo/BotJyoti.jpeg";
+import { useAuth } from "../../auth/useAuth";
+import ContactMenu from "../../Comps/ContactMenu/ContactMenu";
+import SupportMenu from "../../Comps/SupportMenu/SupportMenu";
+import "./ChatPage.scss";
 
 interface Message {
   message: string;
   role: "user" | "assistant";
+}
+
+// Add these new state types
+type LoadingState = "idle" | "loading" | "error";
+
+interface ErrorState {
+  type: "chat_load" | "send_message" | "chat_history" | null;
+  message: string;
 }
 
 const initialMessages: Message[] = [
@@ -31,6 +42,7 @@ const initialMessages: Message[] = [
 ];
 
 const ChatPage: React.FC = () => {
+  // const navigate = useNavigate();
   const { logout, user } = useAuth();
 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -38,17 +50,62 @@ const ChatPage: React.FC = () => {
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [userName] = useState<string>(user?.firstName || "User");
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // const toggleTooltip = () => setIsOpen(!isOpen);
+
+  // New loading and error states
+  const [chatLoadingState, setChatLoadingState] =
+    useState<LoadingState>("idle");
+  const [error, setError] = useState<ErrorState>({ type: null, message: "" });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // const fetchedRef = useRef<string | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
+    setMessages(initialMessages);
+    setChatLoadingState("idle");
+    setError({ type: null, message: "" });
+  }, []);
+
+  useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    const fetchChatDetails = async () => {
+      if (!user?.chat_group_id) return;
+
+      setChatLoadingState("loading");
+      setError({ type: null, message: "" });
+      setMessages(initialMessages);
+
+      try {
+        const chatDetails = await chatApi.getChatDetails(user.chat_group_id);
+        setMessages([...initialMessages, ...(chatDetails.data.messages ?? [])]);
+        setChatLoadingState("idle");
+      } catch (error: unknown) {
+        console.error("Error fetching chat details:", error);
+        setChatLoadingState("error");
+
+        if (axios.isAxiosError(error)) {
+          setError({
+            type: "chat_load",
+            message:
+              error.response?.data?.message ||
+              "Failed to load chat. Please try again.",
+          });
+        }
+      }
+    };
+
+    fetchChatDetails();
+  }, [user]);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setInputMessage(e.target.value);
@@ -72,6 +129,9 @@ const ChatPage: React.FC = () => {
     const trimmedMessage = inputMessage.trim();
     if (!trimmedMessage) return;
 
+    // Clear any previous errors
+    setError({ type: null, message: "" });
+
     // Add user message
     const userMessage: Message = {
       message: trimmedMessage,
@@ -91,10 +151,23 @@ const ChatPage: React.FC = () => {
 
     try {
       const botResponseText = await chatApi.sendChatMessage({
-        chat_group_id: null,
-        isNewChat: true,
+        chat_group_id: user?.chat_group_id ?? null,
+        isNewChat: user?.chat_group_id ? false : true,
         message: trimmedMessage,
       });
+
+      // if (!user?.chat_group_id) {
+      //   const chatDetails = await chatApi.getChatDetails(
+      //     botResponseText.data?.chat_group_id || "",
+      //   );
+
+      //   setPageTitle(chatDetails.data.title);
+      //   navigate(`/chat/${botResponseText.data?.chat_group_id}`, {
+      //     replace: true,
+      //   });
+      //   getChatHistory();
+      //   setCurrentChatId(botResponseText.data?.chat_group_id);
+      // }
 
       const botMessage: Message = {
         message: botResponseText.data?.assistant_message.message || "",
@@ -104,6 +177,15 @@ const ChatPage: React.FC = () => {
       setMessages((prev) => [...prev, botMessage]);
     } catch (error: unknown) {
       console.error("Error getting bot response:", error);
+
+      if (axios.isAxiosError(error)) {
+        setError({
+          type: "send_message",
+          message:
+            error.response?.data?.message ||
+            "Failed to send message. Please try again.",
+        });
+      }
 
       const errorMessage: Message = {
         message: "Sorry, I encountered an error. Please try again.",
@@ -116,13 +198,55 @@ const ChatPage: React.FC = () => {
     }
   };
 
+  // const handleNewChat = (): void => {
+  //   fetchedRef.current = null;
+  //   navigate("/chat");
+  //   setIsSidebarOpen(false);
+  // };
+
+  // const handleLoadChat = (chatId: string): void => {
+  //   setIsSidebarOpen(false);
+  //   navigate(`/chat/${chatId}`);
+  // };
+
   const handleLogout = (): void => {
+    // if (window.confirm("Are you sure you want to logout?")) {
     logout();
+    // }
   };
 
   const toggleSidebar = (): void => {
     setIsSidebarOpen((prev) => !prev);
   };
+
+  //   const formatTime = (date: Date): string => {
+  //     const now = new Date();
+  //     const diff = now.getTime() - date.getTime();
+  //     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  //     if (days === 0) {
+  //       return date.toLocaleTimeString("en-US", {
+  //         hour: "2-digit",
+  //         minute: "2-digit",
+  //       });
+  //     } else if (days === 1) {
+  //       return "Yesterday";
+  //     } else if (days < 7) {
+  //       return `${days} days ago`;
+  //     } else {
+  //       return date.toLocaleDateString("en-US", {
+  //         month: "short",
+  //         day: "numeric",
+  //       });
+  //     }
+  //   };
+
+  // const handleRetryLoadChat = () => {
+  //   if (chatId) {
+  //     fetchedRef.current = null; // Reset fetch ref to allow retry
+  //     fetchChatDetails();
+  //   }
+  // };
 
   return (
     <>
@@ -137,17 +261,23 @@ const ChatPage: React.FC = () => {
 
         {/* Sidebar */}
         <aside
-          className={`chat-sidebar ${isSidebarOpen ? "chat-sidebar--open" : ""
-            }`}
+          className={`chat-sidebar ${
+            isSidebarOpen ? "chat-sidebar--open" : ""
+          }`}
         >
           <div className="sidebar-header">
             <div className="sidebar-header__logo">
-              <img src={botJyotiImage} alt="Bot Jyoti" className="sidebar-header__icon" />
+              <img
+                src={botJyotiImage}
+                alt="Bot Jyoti"
+                className="sidebar-header__icon"
+              />
               <h2 className="sidebar-header__title">Career Bot</h2>
             </div>
           </div>
 
           <div className="sidebar-footer">
+            <SupportMenu />
             <div className="user-profile">
               <div className="user-profile__info">
                 <div className="user-profile__avatar">
@@ -182,7 +312,7 @@ const ChatPage: React.FC = () => {
             </button>
             <h1 className="chat-header__title">Career Guidance Chat</h1>
             <div className="chat-header__email">
-              <a href="mailto:jobshipz@flaunch.io">jobshipz@flaunch.io</a>
+              <ContactMenu />
             </div>
           </header>
 
@@ -192,12 +322,17 @@ const ChatPage: React.FC = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`message message--${message.role === "user" ? "user" : "assistant"
-                    }`}
+                  className={`message message--${
+                    message.role === "user" ? "user" : "assistant"
+                  }`}
                 >
                   <div className="message__avatar">
                     {message.role === "assistant" ? (
-                      <img src={botJyotiImage} alt="Bot Jyoti" className="message__avatar-img" />
+                      <img
+                        src={botJyotiImage}
+                        alt="Bot Jyoti"
+                        className="message__avatar-img"
+                      />
                     ) : (
                       "👤"
                     )}
@@ -213,12 +348,66 @@ const ChatPage: React.FC = () => {
               {isTyping && (
                 <div className="typing-indicator">
                   <div className="typing-indicator__avatar">
-                    <img src={botJyotiImage} alt="Bot Jyoti" className="typing-indicator__avatar-img" />
+                    <img
+                      src={botJyotiImage}
+                      alt="Bot Jyoti"
+                      className="typing-indicator__avatar-img"
+                    />
                   </div>
                   <div className="typing-indicator__dots">
                     <div className="typing-indicator__dot"></div>
                     <div className="typing-indicator__dot"></div>
                     <div className="typing-indicator__dot"></div>
+                  </div>
+                </div>
+              )}
+
+              {chatLoadingState === "loading" && (
+                <div className="message message--assistant">
+                  <div className="message__avatar">🤖</div>
+                  <div className="message__content">
+                    <div className="message__bubble">
+                      <div className="typing-indicator__dots">
+                        <div className="typing-indicator__dot"></div>
+                        <div className="typing-indicator__dot"></div>
+                        <div className="typing-indicator__dot"></div>
+                      </div>
+                      <div
+                        style={{
+                          marginTop: "0.5rem",
+                          fontSize: "0.875rem",
+                          opacity: 0.7,
+                        }}
+                      >
+                        Loading chat...
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Inline Error State - After messages */}
+              {chatLoadingState === "error" && (
+                <div className="message message--assistant">
+                  <div className="message__avatar">⚠️</div>
+                  <div className="message__content">
+                    <div
+                      className="message__bubble"
+                      style={{
+                        background: "#fee2e2",
+                        color: "#991b1b",
+                        border: "1px solid #fecaca",
+                      }}
+                    >
+                      <div style={{ fontWeight: 600, marginBottom: "0.5rem" }}>
+                        Failed to load chat
+                      </div>
+                      <div
+                        style={{ fontSize: "0.875rem", marginBottom: "1rem" }}
+                      >
+                        {error.message}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}

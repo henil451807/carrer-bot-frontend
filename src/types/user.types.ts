@@ -1,4 +1,5 @@
 export interface User {
+  chat_group_id: string;
   created_at: string;
   email: string;
   firstName: string;

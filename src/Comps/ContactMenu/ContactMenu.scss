@@ -1,0 +1,62 @@
+.help-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px; /* Bridge gap between icon and tooltip */
+}
+
+.help-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #888;
+  display: block;
+}
+
+.help-tooltip {
+  position: absolute;
+  top: 30px; /* Positioned slightly below icon */
+  right: 0;
+  width: 240px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  z-index: 100;
+  border: 1px solid #eee;
+  pointer-events: auto; /* Ensures you can click inside */
+}
+
+.help-tooltip::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  background: white;
+  transform: rotate(45deg);
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+}
+
+.help-email {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  display: block;
+  margin-top: 5px;
+}
+
+.tooltip-box::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  background: white;
+  transform: rotate(45deg);
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
