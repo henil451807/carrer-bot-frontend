@@ -47,6 +47,12 @@ export const initialMessages = [
     },
     {
         id: '2',
+        text: "Welcome to Career Bot! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
+        sender: 'bot' as const,
+        timestamp: new Date(),
+    },
+    {
+        id: '3',
         text: "To get started, feel free to ask me anything about careers, education, or professional development. What would you like to know?",
         sender: 'bot' as const,
         timestamp: new Date(),

@@ -301,6 +301,14 @@ body {
   border-bottom-right-radius: 4px;
 }
 
+.message-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  display: block;
+  object-fit: cover;
+}
+
 /* Typing Indicator */
 .typing-indicator {
   display: flex;

@@ -19,6 +19,7 @@ import "./ChatPage.scss";
 interface Message {
   message: string;
   role: "user" | "assistant";
+  image?: string;
 }
 
 // Add these new state types
@@ -30,6 +31,17 @@ interface ErrorState {
 }
 
 const initialMessages: Message[] = [
+  {
+    message: "",
+    role: "assistant",
+    image: botJyotiImage,
+  },
+  {
+    message:
+      "Hi, I’m JYOTI — an AI-powered Career & Youth Opportunity Assistant, here to guide your professional journey.",
+    role: "assistant",
+  },
+
   {
     message:
       "Welcome to Career Bot! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
@@ -331,7 +343,16 @@ const ChatPage: React.FC = () => {
                   </div>
                   <div className="message__content">
                     <div className="message__bubble">
-                      <ReactMarkdown>{message.message}</ReactMarkdown>
+                      {message.image && (
+                        <img
+                          src={message.image}
+                          alt="Bot"
+                          className="message-image"
+                        />
+                      )}
+                      {message.message && (
+                        <ReactMarkdown>{message.message}</ReactMarkdown>
+                      )}
                     </div>
                   </div>
                 </div>
