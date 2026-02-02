@@ -307,7 +307,7 @@ const ChatPage: React.FC = () => {
             >
               ☰
             </button>
-            <h1 className="chat-header__title">Career Guidance Chat</h1>
+            <h1 className="chat-header__title">JYOTI : Your Career & Youth Opportunity Assistant</h1>
             <div className="chat-header__actions">
               <ContactMenu />
               <button
