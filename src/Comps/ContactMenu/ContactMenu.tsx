@@ -109,7 +109,7 @@ const ContactMenu = () => {
                 (e.currentTarget.style.textDecoration = "none")
               }
             >
-              Contact jobshipz@flaunch.io
+              Contact <br/> jobshipz@flaunch.io
             </a>
           </div>
         </div>
