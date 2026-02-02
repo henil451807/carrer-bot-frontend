@@ -5,12 +5,12 @@ declare module "axios" {
   }
 }
 
-const axiosWrapper = axios.create({
-  baseURL: "https://career-bot-api-ct5m.onrender.com/api",
-});
 // const axiosWrapper = axios.create({
-//   baseURL: "http://localhost:8000/api",
+//   baseURL: "https://career-bot-api-ct5m.onrender.com/api",
 // });
+const axiosWrapper = axios.create({
+  baseURL: "http://localhost:8000/api/v1",
+});
 
 axiosWrapper.interceptors.request.use((config) => {
   const token = localStorage.getItem("authToken");
