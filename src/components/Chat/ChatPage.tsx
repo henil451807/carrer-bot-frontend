@@ -8,6 +8,7 @@ import React, {
   type KeyboardEvent,
 } from "react";
 import ReactMarkdown from "react-markdown";
+import { IoLogOutOutline } from "react-icons/io5";
 import chatApi from "../../api/chatApi";
 import botJyotiImage from "../../assets/Logo/BotJyoti.jpeg";
 import { useAuth } from "../../auth/useAuth";
@@ -49,7 +50,7 @@ const ChatPage: React.FC = () => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-  const [userName] = useState<string>(user?.firstName || "User");
+
   // const [isOpen, setIsOpen] = useState(false);
 
   // const toggleTooltip = () => setIsOpen(!isOpen);
@@ -261,9 +262,8 @@ const ChatPage: React.FC = () => {
 
         {/* Sidebar */}
         <aside
-          className={`chat-sidebar ${
-            isSidebarOpen ? "chat-sidebar--open" : ""
-          }`}
+          className={`chat-sidebar ${isSidebarOpen ? "chat-sidebar--open" : ""
+            }`}
         >
           <div className="sidebar-header">
             <div className="sidebar-header__logo">
@@ -278,25 +278,10 @@ const ChatPage: React.FC = () => {
 
           <div className="sidebar-footer">
             <SupportMenu />
-            <div className="user-profile">
-              <div className="user-profile__info">
-                <div className="user-profile__avatar">
-                  {userName
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")}
-                </div>
-                <div className="user-profile__name">{userName}</div>
-              </div>
-              <button
-                className="user-profile__logout"
-                onClick={handleLogout}
-                aria-label="Logout"
-                title="Logout"
-              >
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxLjI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWxvZy1vdXQtaWNvbiBsdWNpZGUtbG9nLW91dCI+PHBhdGggZD0ibTE2IDE3IDUtNS01LTUiLz48cGF0aCBkPSJNMjEgMTJIOSIvPjxwYXRoIGQ9Ik05IDIxSDVhMiAyIDAgMCAxLTItMlY1YTIgMiAwIDAgMSAyLTJoNCIvPjwvc3ZnPg==" />
-              </button>
-            </div>
+            <button className="sidebar-logout-btn" onClick={handleLogout}>
+              <IoLogOutOutline className="logout-icon" />
+              <span className="logout-text">Log out</span>
+            </button>
           </div>
         </aside>
 
@@ -311,8 +296,16 @@ const ChatPage: React.FC = () => {
               ☰
             </button>
             <h1 className="chat-header__title">Career Guidance Chat</h1>
-            <div className="chat-header__email">
+            <div className="chat-header__actions">
               <ContactMenu />
+              <button
+                className="header-logout-btn"
+                onClick={handleLogout}
+                aria-label="Logout"
+                title="Logout"
+              >
+                <IoLogOutOutline />
+              </button>
             </div>
           </header>
 
@@ -322,9 +315,8 @@ const ChatPage: React.FC = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`message message--${
-                    message.role === "user" ? "user" : "assistant"
-                  }`}
+                  className={`message message--${message.role === "user" ? "user" : "assistant"
+                    }`}
                 >
                   <div className="message__avatar">
                     {message.role === "assistant" ? (
