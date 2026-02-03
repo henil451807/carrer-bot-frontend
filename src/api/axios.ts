@@ -9,7 +9,7 @@ declare module "axios" {
 //   baseURL: "https://career-bot-api-ct5m.onrender.com/api",
 // });
 const axiosWrapper = axios.create({
-  baseURL: "http://localhost:8000/api/v1",
+  baseURL: "https://careerjyoti.sbs/api/v1",
 });
 
 axiosWrapper.interceptors.request.use((config) => {
