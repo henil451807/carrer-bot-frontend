@@ -1,49 +1,34 @@
 import { useState } from "react";
+import "./ContactMenu.scss";
 
 const ContactMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div
+      className="contact-menu-wrapper"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      style={{ position: "relative", display: "inline-block", padding: "10px" }}
     >
-      {/* 1. Question Mark Icon */}
-      <svg
-        width="22"
-        height="22"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#888"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        style={{ cursor: "pointer" }}
-      >
-        <circle cx="12" cy="12" r="10"></circle>
-        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
+      {/* 1. Question Mark Icon Button */}
+      <button className="contact-menu-btn" aria-label="Help">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </button>
 
       {/* 2. The Tooltip Box */}
       {isOpen && (
-        <div
-          className="tooltip-box"
-          style={{
-            position: "absolute",
-            top: "40px",
-            right: "0",
-            width: "280px",
-            padding: "24px",
-            backgroundColor: "#ffffff",
-            borderRadius: "8px",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-            border: "1px solid #ddd",
-            zIndex: 1000,
-            textAlign: "center",
-          }}
-        >
+        <div className="tooltip-box">
           {/* Yellow Envelope Icon */}
           <svg
             width="50"
@@ -109,7 +94,7 @@ const ContactMenu = () => {
                 (e.currentTarget.style.textDecoration = "none")
               }
             >
-              Contact <br/> jobshipz@flaunch.io
+              Contact <br /> jobshipz@flaunch.io
             </a>
           </div>
         </div>

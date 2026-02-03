@@ -1,62 +1,61 @@
-.help-wrapper {
+.contact-menu-wrapper {
   position: relative;
-  display: inline-block;
-  padding-bottom: 10px; /* Bridge gap between icon and tooltip */
+  display: flex;
+  align-items: center;
 }
 
-.help-icon {
-  width: 24px;
-  height: 24px;
+.contact-menu-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  color: #888;
-  display: block;
+  color: #6b7280;
+  padding: 8px;
+  /* Matches header-logout-btn */
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: color 0.2s, background-color 0.2s;
+
+  &:hover {
+    color: #1a73e8;
+    /* Google blue for help/contact */
+    background-color: #e8f0fe;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
-.help-tooltip {
+.tooltip-box {
   position: absolute;
-  top: 30px; /* Positioned slightly below icon */
+  top: 45px;
+  /* Directly below the button (24px + 8px padding * 2 = 40px height, plus small gap) */
   right: 0;
-  width: 240px;
-  padding: 20px;
-  background: white;
+  width: 280px;
+  padding: 24px;
+  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid #ddd;
+  z-index: 1000;
   text-align: center;
-  z-index: 100;
-  border: 1px solid #eee;
-  pointer-events: auto; /* Ensures you can click inside */
-}
+  cursor: default;
 
-.help-tooltip::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  right: 8px;
-  width: 10px;
-  height: 10px;
-  background: white;
-  transform: rotate(45deg);
-  border-left: 1px solid #eee;
-  border-top: 1px solid #eee;
-}
-
-.help-email {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: 500;
-  display: block;
-  margin-top: 5px;
-}
-
-.tooltip-box::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  right: 12px;
-  width: 10px;
-  height: 10px;
-  background: white;
-  transform: rotate(45deg);
-  border-left: 1px solid #ddd;
-  border-top: 1px solid #ddd;
+  &::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 15px;
+    /* Aligns with the middle of the button roughly */
+    width: 10px;
+    height: 10px;
+    background: white;
+    transform: rotate(45deg);
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  }
 }
