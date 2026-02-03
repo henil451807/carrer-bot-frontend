@@ -2,10 +2,10 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAs68_RqFj3AJNtLgLYAMvE9aII5fhYfBY",
-  authDomain: "carrer-bot.firebaseapp.com",
-  projectId: "carrer-bot",
-  appId: "1:837811294843:web:5a32d0a49d0d4a5f26c8de",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
