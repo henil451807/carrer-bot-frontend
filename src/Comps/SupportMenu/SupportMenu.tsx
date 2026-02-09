@@ -1,10 +1,22 @@
+import { useState } from "react";
 import "./SupportMenu.scss";
+import SupportModal from "../SupportModal/SupportModal";
+import BlankScreenModal from "../BlankScreenModal/BlankScreenModal";
 
 const SupportMenu = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBlankScreenModalOpen, setIsBlankScreenModalOpen] = useState(false);
+
   return (
     <div className="menu-container">
       {/* Item 1: Privacy Policy */}
-      <button type="button" className="menu-item">
+      <a
+        href="https://impress.ai/privacy-policy/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="menu-item"
+        style={{ textDecoration: "none" }}
+      >
         <svg
           className="menu-icon"
           viewBox="0 0 24 24"
@@ -18,10 +30,14 @@ const SupportMenu = () => {
           <polyline points="9 12 11 14 15 10" />
         </svg>
         <span className="menu-text">Privacy policy</span>
-      </button>
+      </a>
 
       {/* Item 2: Get Support */}
-      <button type="button" className="menu-item">
+      <button
+        type="button"
+        className="menu-item"
+        onClick={() => setIsModalOpen(true)}
+      >
         <svg
           className="menu-icon"
           viewBox="0 0 24 24"
@@ -38,7 +54,11 @@ const SupportMenu = () => {
       </button>
 
       {/* Item 3: Seeing a blank screen? */}
-      <button type="button" className="menu-item">
+      <button
+        type="button"
+        className="menu-item"
+        onClick={() => setIsBlankScreenModalOpen(true)}
+      >
         <svg
           className="menu-icon"
           viewBox="0 0 24 24"
@@ -52,6 +72,16 @@ const SupportMenu = () => {
         </svg>
         <span className="menu-text">Seeing a blank screen?</span>
       </button>
+
+      <SupportModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+
+      <BlankScreenModal
+        isOpen={isBlankScreenModalOpen}
+        onClose={() => setIsBlankScreenModalOpen(false)}
+      />
     </div>
   );
 };

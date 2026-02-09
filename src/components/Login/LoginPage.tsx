@@ -71,7 +71,7 @@ const LoginPage: React.FC = () => {
                 alt="1M1B Logo"
                 className="login-header__logo-img"
               />
-              <h1 className="login-header__title">Career Bot</h1>
+              <h1 className="login-header__title">Career Jyoti</h1>
               <img
                 src={jobShipzLogo}
                 alt="JobShipz Logo"

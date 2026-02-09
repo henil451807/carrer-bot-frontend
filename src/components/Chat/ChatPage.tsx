@@ -11,6 +11,8 @@ import ReactMarkdown from "react-markdown";
 import { IoLogOutOutline } from "react-icons/io5";
 import chatApi from "../../api/chatApi";
 import botJyotiImage from "../../assets/Logo/BotJyoti.jpeg";
+import logo1M1B from "../../assets/Logo/1M1BLogo.png";
+import jobShipzLogo from "../../assets/Logo/JobShipzLogo.png";
 import { useAuth } from "../../auth/useAuth";
 import ContactMenu from "../../Comps/ContactMenu/ContactMenu";
 import SupportMenu from "../../Comps/SupportMenu/SupportMenu";
@@ -274,8 +276,9 @@ const ChatPage: React.FC = () => {
 
         {/* Sidebar */}
         <aside
-          className={`chat-sidebar ${isSidebarOpen ? "chat-sidebar--open" : ""
-            }`}
+          className={`chat-sidebar ${
+            isSidebarOpen ? "chat-sidebar--open" : ""
+          }`}
         >
           <div className="sidebar-header">
             <div className="sidebar-header__logo">
@@ -284,7 +287,7 @@ const ChatPage: React.FC = () => {
                 alt="Bot Jyoti"
                 className="sidebar-header__icon"
               />
-              <h2 className="sidebar-header__title">Career Bot</h2>
+              <h2 className="sidebar-header__title">Career Jyoti</h2>
             </div>
           </div>
 
@@ -307,7 +310,19 @@ const ChatPage: React.FC = () => {
             >
               ☰
             </button>
-            <h1 className="chat-header__title">Jyoti : Your digital MargDarshak</h1>
+            <div className="chat-header__title-container">
+              <img
+                src={logo1M1B}
+                alt="1M1B"
+                className="chat-header__logo chat-header__logo--left"
+              />
+              <h1 className="chat-header__title">Career Jyoti</h1>
+              <img
+                src={jobShipzLogo}
+                alt="JobShipz"
+                className="chat-header__logo chat-header__logo--right"
+              />
+            </div>
             <div className="chat-header__actions">
               <ContactMenu />
               <button
@@ -327,8 +342,9 @@ const ChatPage: React.FC = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`message message--${message.role === "user" ? "user" : "assistant"
-                    }`}
+                  className={`message message--${
+                    message.role === "user" ? "user" : "assistant"
+                  }`}
                 >
                   <div className="message__avatar">
                     {message.role === "assistant" ? (

@@ -77,7 +77,7 @@ const ContactMenu = () => {
                 marginBottom: "4px",
               }}
             >
-              Facing any technical difficulties?
+              Jyoti : Your digital MargDarshak
             </div>
             <a
               href="mailto:jobshipz@flaunch.io"
