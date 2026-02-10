@@ -7,14 +7,15 @@ import React, {
   type FormEvent,
   type KeyboardEvent,
 } from "react";
-import ReactMarkdown from "react-markdown";
 import { IoLogOutOutline } from "react-icons/io5";
+import ReactMarkdown from "react-markdown";
 import chatApi from "../../api/chatApi";
-import botJyotiImage from "../../assets/Logo/BotJyoti.jpeg";
 import logo1M1B from "../../assets/Logo/1M1BLogo.png";
+import botJyotiImage from "../../assets/Logo/BotJyoti.jpeg";
 import jobShipzLogo from "../../assets/Logo/JobShipzLogo.png";
 import { useAuth } from "../../auth/useAuth";
 import ContactMenu from "../../Comps/ContactMenu/ContactMenu";
+import LanguageToggle from "../../Comps/LanguageToggle/LanguageToggle";
 import SupportMenu from "../../Comps/SupportMenu/SupportMenu";
 import "./ChatPage.scss";
 
@@ -57,13 +58,17 @@ const initialMessages: Message[] = [
 ];
 
 const ChatPage: React.FC = () => {
-  // const navigate = useNavigate();
   const { logout, user } = useAuth();
 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [language, setLanguage] = useState<"English" | "Hindi">("English");
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "English" ? "Hindi" : "English"));
+  };
 
   // const [isOpen, setIsOpen] = useState(false);
 
@@ -123,11 +128,21 @@ const ChatPage: React.FC = () => {
   }, [user]);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setInputMessage(e.target.value);
+    const target = e.target;
+    setInputMessage(target.value);
 
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    // Reset height to auto to get the correct scrollHeight when shrinking
+    target.style.height = "auto";
+
+    // Set the height based on scrollHeight
+    const newHeight = target.scrollHeight;
+    target.style.height = `${newHeight}px`;
+
+    // Toggle scroll class based on max-height (150px)
+    if (newHeight > 150) {
+      target.classList.add("has-scroll");
+    } else {
+      target.classList.remove("has-scroll");
     }
   };
 
@@ -156,9 +171,10 @@ const ChatPage: React.FC = () => {
     setMessages((prev) => [...prev, userMessage]);
     setInputMessage("");
 
-    // Reset textarea height
+    // Reset textarea height and scrolling state
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
+      textareaRef.current.classList.remove("has-scroll");
     }
 
     // Show typing indicator
@@ -290,6 +306,8 @@ const ChatPage: React.FC = () => {
               <h2 className="sidebar-header__title">Career Jyoti</h2>
             </div>
           </div>
+
+          <LanguageToggle language={language} onToggle={toggleLanguage} />
 
           <div className="sidebar-footer">
             <SupportMenu />

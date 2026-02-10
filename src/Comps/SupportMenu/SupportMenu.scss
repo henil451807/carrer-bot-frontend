@@ -39,40 +39,9 @@
   }
 }
 
-.menu-language-section {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 8px;
-}
-
 .menu-item--static {
   cursor: default;
   &:hover {
     opacity: 1;
-  }
-}
-
-.language-toggle-btn {
-  background-color: #f1f3f4;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  color: #3c4043;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 12px;
-  width: fit-content;
-  margin-left: 40px; // Align with text
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #e8eaed;
-  }
-
-  &:active {
-    background-color: #dadce0;
   }
 }
