@@ -3,7 +3,8 @@ import { FirebaseError } from "firebase/app";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authApi from "../../api/authApi";
-import logo from "../../assets/Logo/1M1BLogo.png";
+import logo1M1B from "../../assets/Logo/1M1BLogo.png";
+import botJyoti from "../../assets/Logo/BotJyoti.jpeg";
 import jobShipzLogo from "../../assets/Logo/JobShipzLogo.png";
 import { googleSignIn } from "../../auth/google";
 import { useAuth } from "../../auth/useAuth";
@@ -61,30 +62,45 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <div className="login-container">
+        <div className="login-corner-logos">
+          <img
+            src={logo1M1B}
+            alt="1M1B Logo"
+            className="login-corner-logo login-corner-logo--left"
+          />
+          <img
+            src={jobShipzLogo}
+            alt="JobShipz Logo"
+            className="login-corner-logo login-corner-logo--right"
+          />
+        </div>
         <div className="login-background-circle login-background-circle--1"></div>
         <div className="login-background-circle login-background-circle--2"></div>
         <div className="login-card">
-          <div className="login-header">
-            <div className="login-header__title-row">
+          <div className="login-header-layout">
+            <div className="login-image-container">
               <img
-                src={logo}
-                alt="1M1B Logo"
-                className="login-header__logo-img"
-              />
-              <h1 className="login-header__title">Career Jyoti</h1>
-              <img
-                src={jobShipzLogo}
-                alt="JobShipz Logo"
-                className="login-header__logo-img"
+                src={botJyoti}
+                alt="Career Jyoti"
+                className="login-bot-img"
               />
             </div>
-            <p className="login-header__subtitle">
-              Sign in to access your AI-powered career guidance
-            </p>
+            <div className="login-text-content">
+              <h1 className="login-title">Career Jyoti</h1>
+              <p className="login-description">
+                Got career questions? Career Jyotis got answers that actually
+                make sense
+              </p>
+            </div>
           </div>
 
-          <div className="login-footer">
-            <button className="google-btn" onClick={handleGoogleLogin}>
+          <p className="login-signin-prompt">
+            Sign in to access your AI-powered career guidance
+          </p>
+          <div className="login-divider"></div>
+
+          <div className="login-actions">
+            <button className="google-login-btn" onClick={handleGoogleLogin}>
               <svg className="google-icon" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -104,17 +120,15 @@ const LoginPage: React.FC = () => {
                 />
               </svg>
               <span>
-                {!isGoogleLoading && "Sign in with Google"}
-                {isGoogleLoading && "Signing In with Google..."}
+                {!isGoogleLoading && "Sign in with google"}
+                {isGoogleLoading && "Signing in..."}
               </span>
             </button>
 
             {errors.google && (
-              <div className="form-group">
-                <p className="form-group__error" role="alert">
-                  {errors.google}
-                </p>
-              </div>
+              <p className="login-error" role="alert">
+                {errors.google}
+              </p>
             )}
           </div>
         </div>

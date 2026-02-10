@@ -6,9 +6,43 @@ import BlankScreenModal from "../BlankScreenModal/BlankScreenModal";
 const SupportMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBlankScreenModalOpen, setIsBlankScreenModalOpen] = useState(false);
+  const [language, setLanguage] = useState<"English" | "Hindi">("English");
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "English" ? "Hindi" : "English"));
+  };
 
   return (
     <div className="menu-container">
+      {/* Item 0: Language Toggle */}
+      <div className="menu-language-section">
+        <div className="menu-item menu-item--static">
+          <svg
+            className="menu-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+          <span className="menu-text">
+            Current language: <strong>{language}</strong>
+          </span>
+        </div>
+        <button
+          type="button"
+          className="language-toggle-btn"
+          onClick={toggleLanguage}
+        >
+          Switch to {language === "English" ? "Hindi" : "English"}
+        </button>
+      </div>
+
       {/* Item 1: Privacy Policy */}
       <a
         href="https://impress.ai/privacy-policy/"
