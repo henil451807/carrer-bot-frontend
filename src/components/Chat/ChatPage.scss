@@ -178,6 +178,12 @@ body {
   object-fit: contain;
 }
 
+.chat-header__logo_job_ship {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
 .chat-header__title {
   font-size: 1.125rem;
   font-weight: 600;
@@ -256,8 +262,8 @@ body {
 }
 
 .message__avatar {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
