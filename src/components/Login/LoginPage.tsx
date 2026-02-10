@@ -88,7 +88,7 @@ const LoginPage: React.FC = () => {
             <div className="login-text-content">
               <h1 className="login-title">Career Jyoti</h1>
               <p className="login-description">
-                Got career questions? Career Jyotis got answers that actually
+                Got career questions? Career Jyoti got answers that actually
                 make sense
               </p>
             </div>
