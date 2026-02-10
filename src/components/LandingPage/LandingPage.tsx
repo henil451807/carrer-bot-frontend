@@ -18,7 +18,7 @@ const LandingPage: React.FC = () => {
                     <div className="nav-left">
                         <div className="logo">
                             <span className="logo-icon">🤖</span>
-                            <span className="logo-text">Career Bot</span>
+                            <span className="logo-text">Career Jyoti</span>
                         </div>
                     </div>
                     <div className="nav-right">
@@ -65,7 +65,7 @@ const LandingPage: React.FC = () => {
                     <div className="hero-image">
                         <img
                             src="/brain/7ec53426-6e60-4040-a32c-5c6374e4a6ad/career_bot_mockup_1768150822560.png"
-                            alt="Career Bot Interface"
+                            alt="Career Jyoti Interface"
                             className="mockup-img"
                         />
                     </div>
@@ -92,7 +92,7 @@ const LandingPage: React.FC = () => {
                         <h2>Empower your career journey with AI. From exploration to success.</h2>
                         <p>
                             Whether you're a student exploring options or a professional seeking change,
-                            we've got you covered. Career Bot provides personalized guidance tailored to
+                            we've got you covered. Career Jyoti provides personalized guidance tailored to
                             your unique goals and aspirations.
                         </p>
                         <a href="#" className="feature-link" onClick={(e) => { e.preventDefault(); handleTryIt(); }}>
@@ -187,7 +187,7 @@ const LandingPage: React.FC = () => {
                     <div className="demo-header">
                         <h2>All the career guidance capabilities, <span className="highlight">out of the box.</span></h2>
                         <p>
-                            Skip the endless research and get instant answers. Career Bot is ready to help
+                            Skip the endless research and get instant answers. Career Jyoti is ready to help
                             you from day one with comprehensive career guidance across all industries and roles.
                         </p>
                     </div>
@@ -259,7 +259,7 @@ const LandingPage: React.FC = () => {
                         <div className="footer-brand">
                             <div className="logo">
                                 <span className="logo-icon">🤖</span>
-                                <span className="logo-text">Career Bot</span>
+                                <span className="logo-text">Career Jyoti</span>
                             </div>
                             <p>
                                 Empowering students and professionals with AI-driven career guidance
@@ -287,7 +287,7 @@ const LandingPage: React.FC = () => {
                         <div className="footer-column">
                             <h4>Get Started</h4>
                             <ul>
-                                <li><a href="#" onClick={(e) => { e.preventDefault(); handleTryIt(); }}>Try Career Bot</a></li>
+                                <li><a href="#" onClick={(e) => { e.preventDefault(); handleTryIt(); }}>Try Career Jyoti</a></li>
                                 <li><a href="#">Sign Up</a></li>
                                 <li><a href="#">FAQ</a></li>
                                 <li><a href="#">Support</a></li>
@@ -295,7 +295,7 @@ const LandingPage: React.FC = () => {
                         </div>
                     </div>
                     <div className="footer-bottom">
-                        <p>© 2026 Career Bot. All rights reserved.</p>
+                        <p>© 2026 Career Jyoti. All rights reserved.</p>
                     </div>
                 </div>
             </footer>

@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
                 </button>
                 <div className="header-title">
                     <span className="bot-icon">🤖</span>
-                    <h1>Career Bot</h1>
+                    <h1>Career Jyoti</h1>
                 </div>
             </div>
             <div className="header-right">

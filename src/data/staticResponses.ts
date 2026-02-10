@@ -1,7 +1,7 @@
 export const staticResponses: Record<string, string> = {
     default: "I'm here to help you with your career! I can provide guidance on career paths, education, skills development, and job opportunities. What would you like to know?",
 
-    greeting: "Hello! Welcome to Career Bot. I'm here to assist you in navigating your career journey. How can I help you today?",
+    greeting: "Hello! Welcome to Career Jyoti. I'm here to assist you in navigating your career journey. How can I help you today?",
 
     career: "Career planning is an important step! I can help you explore different career paths, understand required qualifications, and guide you through the decision-making process. What specific area are you interested in?",
 
@@ -41,13 +41,13 @@ export const getResponse = (userMessage: string): string => {
 export const initialMessages = [
     {
         id: '1',
-        text: "Welcome to Career Bot! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
+        text: "Welcome to Career Jyoti! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
         sender: 'bot' as const,
         timestamp: new Date(),
     },
     {
         id: '2',
-        text: "Welcome to Career Bot! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
+        text: "Welcome to Career Jyoti! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
         sender: 'bot' as const,
         timestamp: new Date(),
     },

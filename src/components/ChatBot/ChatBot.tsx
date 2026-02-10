@@ -11,7 +11,7 @@ import './ChatBot.scss';
 const initialMessages: Message[] = [
     {
         id: '1',
-        text: "Welcome to Career Bot! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
+        text: "Welcome to Career Jyoti! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
         sender: 'bot',
         timestamp: new Date(),
         role: 'user',
