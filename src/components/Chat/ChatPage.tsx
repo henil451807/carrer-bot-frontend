@@ -316,7 +316,7 @@ const ChatPage: React.FC = () => {
                 alt="1M1B"
                 className="chat-header__logo chat-header__logo--left"
               />
-              <h1 className="chat-header__title">Career Jyoti</h1>
+              <h1 className="chat-header__title">Career Jyoti : Your Digitial Margdarshak</h1>
               <img
                 src={jobShipzLogo}
                 alt="JobShipz"
