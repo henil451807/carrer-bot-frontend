@@ -3,7 +3,7 @@ import { FirebaseError } from "firebase/app";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authApi from "../../api/authApi";
-import logo1M1B from "../../assets/Logo/1M1BLogo.png";
+import logo1M1B from "../../assets/Logo/login1m1blogo.png";
 import botJyoti from "../../assets/Logo/BotJyoti.jpeg";
 import jobShipzLogo from "../../assets/Logo/JobShipzLogo.png";
 import { googleSignIn } from "../../auth/google";
