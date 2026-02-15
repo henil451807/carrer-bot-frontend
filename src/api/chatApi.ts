@@ -36,6 +36,18 @@ class ChatApi {
     const response = await axiosWrapper.get(`chat/groups`);
     return response.data;
   }
+
+  async updateChatLanguage(chatGroupId: string, language: string): Promise<{
+    status: number;
+    error: boolean;
+    data: any;
+    message: string;
+  }> {
+    const response = await axiosWrapper.put(
+      `chat/language?chat_group_id=${chatGroupId}&chat_language=${language}`
+    );
+    return response.data;
+  }
 }
 
 const chatApi = new ChatApi();

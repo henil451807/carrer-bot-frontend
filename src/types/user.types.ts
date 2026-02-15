@@ -7,4 +7,5 @@ export interface User {
   is_active: boolean;
   lastName: string;
   mobileNo: string;
+  chat_language?: string;
 }

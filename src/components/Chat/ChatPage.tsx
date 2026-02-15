@@ -64,10 +64,30 @@ const ChatPage: React.FC = () => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
-  const [language, setLanguage] = useState<"English" | "Hindi">("English");
+  const [language, setLanguage] = useState<"English" | "Hindi">(() => {
+    // Initialize from user profile, default to English
+    const userLanguage = user?.chat_language;
+    if (userLanguage === "hindi") return "Hindi";
+    return "English";
+  });
 
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "English" ? "Hindi" : "English"));
+  const toggleLanguage = async () => {
+    const newLanguage = language === "English" ? "Hindi" : "English";
+    setLanguage(newLanguage);
+
+    // Call the API to update language on backend
+    if (user?.chat_group_id) {
+      try {
+        await chatApi.updateChatLanguage(
+          user.chat_group_id,
+          newLanguage.toLowerCase()
+        );
+      } catch (error) {
+        console.error("Error updating chat language:", error);
+        // Optionally revert language on error
+        // setLanguage(language);
+      }
+    }
   };
 
   // const [isOpen, setIsOpen] = useState(false);
@@ -292,9 +312,8 @@ const ChatPage: React.FC = () => {
 
         {/* Sidebar */}
         <aside
-          className={`chat-sidebar ${
-            isSidebarOpen ? "chat-sidebar--open" : ""
-          }`}
+          className={`chat-sidebar ${isSidebarOpen ? "chat-sidebar--open" : ""
+            }`}
         >
           <div className="sidebar-header">
             <div className="sidebar-header__logo">
@@ -360,9 +379,8 @@ const ChatPage: React.FC = () => {
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`message message--${
-                    message.role === "user" ? "user" : "assistant"
-                  }`}
+                  className={`message message--${message.role === "user" ? "user" : "assistant"
+                    }`}
                 >
                   <div className="message__avatar">
                     {message.role === "assistant" ? (
