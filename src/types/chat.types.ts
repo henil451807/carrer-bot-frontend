@@ -20,6 +20,7 @@ export interface SendChatMessagePayload {
 
 export interface SendChatMessage {
   chat_group_id: string;
+  chat_language: string;
   user_message: {
     id: string;
     chat_group_id: string;
@@ -51,6 +52,7 @@ export interface ChatHistoryItem {
   id: string;
   chat_group_id: string;
   title: string;
+  chat_language: string;
   created_at: string;
   updated_at: string;
 }

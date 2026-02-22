@@ -73,6 +73,66 @@ body {
   color: #1f2937;
 }
 
+/* Sidebar Chat List */
+.sidebar-chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem 0.25rem;
+  }
+
+  &__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    padding: 0.625rem 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #374151;
+    border-radius: 6px;
+    margin: 0 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background-color: #f3f4f6;
+      color: #1f2937;
+    }
+
+    &--active {
+      background-color: #2b331f;
+      color: #ffffff;
+
+      &:hover {
+        background-color: #3d4a2c;
+        color: #ffffff;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+  }
+}
+
 /* Sidebar Footer */
 .sidebar-footer {
   padding: 1rem;
@@ -446,6 +506,7 @@ body {
 
   &.has-scroll {
     overflow-y: auto;
+
     &::-webkit-scrollbar {
       display: block;
     }

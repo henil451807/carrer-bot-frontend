@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import api from "../api/axios";
 import { AuthContext } from "./AuthContext";
 import authApi from "../api/authApi";
 import type { User } from "../types/user.types";
@@ -9,15 +8,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
 
+  const [englishChatGroupId, setEnglishChatGroupId] = useState<string | null>(null);
+  const [hindiChatGroupId, setHindiChatGroupId] = useState<string | null>(null);
+  const [activeChatGroupId, setActiveChatGroupId] = useState<string | null>(null);
+  const [activeChatLanguage, setActiveChatLanguage] = useState<string>("english");
+
   useEffect(() => {
     const verifyToken = async () => {
       const token = localStorage.getItem("authToken");
-
       if (!token) {
         setLoading(false);
         return;
       }
-
       try {
         await fetchUser();
       } catch {
@@ -26,9 +28,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(false);
       }
     };
-
     verifyToken();
   }, []);
+
+  const applyUserChatGroups = (userData: User) => {
+    const engId = userData.english_chat_group_id ?? userData.chat_group_id ?? null;
+    const hinId = userData.hindi_chat_group_id ?? null;
+    setEnglishChatGroupId(engId);
+    setHindiChatGroupId(hinId);
+
+    // Restore previously chosen language from localStorage (default: english)
+    const savedLanguage = localStorage.getItem("activeChatLanguage") ?? "english";
+    if (savedLanguage === "hindi" && hinId) {
+      setActiveChatGroupId(hinId);
+      setActiveChatLanguage("hindi");
+    } else {
+      setActiveChatGroupId(engId);
+      setActiveChatLanguage("english");
+    }
+  };
 
   const fetchUser = async () => {
     try {
@@ -36,11 +54,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (response.data) {
         setUser(response.data);
         setIsAuthenticated(true);
+        applyUserChatGroups(response.data);
       }
     } catch (error) {
       localStorage.removeItem("authToken");
       setIsAuthenticated(false);
       setUser(null);
+      setEnglishChatGroupId(null);
+      setHindiChatGroupId(null);
+      setActiveChatGroupId(null);
+      setActiveChatLanguage("english");
       throw error;
     }
   };
@@ -51,7 +74,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await fetchUser();
     } catch (error) {
-      // If fetching user fails after login, revert authentication
       localStorage.removeItem("authToken");
       setIsAuthenticated(false);
       throw error;
@@ -60,12 +82,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("activeChatLanguage");
     setIsAuthenticated(false);
+    setUser(null);
+    setEnglishChatGroupId(null);
+    setHindiChatGroupId(null);
+    setActiveChatGroupId(null);
+    setActiveChatLanguage("english");
+  };
+
+  /**
+   * Switch the active chat group (called on language toggle or sidebar click).
+   */
+  const setActiveChatGroup = (chatGroupId: string, chatLanguage: string) => {
+    setActiveChatGroupId(chatGroupId);
+    setActiveChatLanguage(chatLanguage);
+    // Persist so the same language is restored after a page refresh
+    localStorage.setItem("activeChatLanguage", chatLanguage);
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, loading, login, logout, user }}
+      value={{
+        isAuthenticated,
+        loading,
+        login,
+        logout,
+        user,
+        activeChatGroupId,
+        activeChatLanguage,
+        englishChatGroupId,
+        hindiChatGroupId,
+        setActiveChatGroup,
+      }}
     >
       {children}
     </AuthContext.Provider>

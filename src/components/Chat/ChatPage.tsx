@@ -25,7 +25,6 @@ interface Message {
   image?: string;
 }
 
-// Add these new state types
 type LoadingState = "idle" | "loading" | "error";
 
 interface ErrorState {
@@ -41,10 +40,9 @@ const initialMessages: Message[] = [
   },
   {
     message:
-      "Hi, I’m JYOTI — an AI-powered Career & Youth Opportunity Assistant, here to guide your professional journey.",
+      "Hi, I'm JYOTI — an AI-powered Career & Youth Opportunity Assistant, here to guide your professional journey.",
     role: "assistant",
   },
-
   {
     message:
       "Welcome to Career Jyoti! I'm here to help you navigate your career journey. I can assist you with career guidance, education paths, skill development, and job opportunities.",
@@ -58,75 +56,56 @@ const initialMessages: Message[] = [
 ];
 
 const ChatPage: React.FC = () => {
-  const { logout, user } = useAuth();
+  const {
+    logout,
+    activeChatGroupId,
+    activeChatLanguage,
+    englishChatGroupId,
+    hindiChatGroupId,
+    setActiveChatGroup,
+  } = useAuth();
 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [inputMessage, setInputMessage] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+  // Language derived from activeChatLanguage in context
   const [language, setLanguage] = useState<"English" | "Hindi">(() => {
-    // Initialize from user profile, default to English
-    const userLanguage = user?.chat_language;
-    if (userLanguage === "hindi") return "Hindi";
-    return "English";
+    return activeChatLanguage === "hindi" ? "Hindi" : "English";
   });
 
-  const toggleLanguage = async () => {
-    const newLanguage = language === "English" ? "Hindi" : "English";
-    setLanguage(newLanguage);
-
-    // Call the API to update language on backend
-    if (user?.chat_group_id) {
-      try {
-        await chatApi.updateChatLanguage(
-          user.chat_group_id,
-          newLanguage.toLowerCase()
-        );
-      } catch (error) {
-        console.error("Error updating chat language:", error);
-        // Optionally revert language on error
-        // setLanguage(language);
-      }
-    }
-  };
-
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const toggleTooltip = () => setIsOpen(!isOpen);
-
-  // New loading and error states
   const [chatLoadingState, setChatLoadingState] =
     useState<LoadingState>("idle");
   const [error, setError] = useState<ErrorState>({ type: null, message: "" });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  // const fetchedRef = useRef<string | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Sync language toggle whenever the active group's language changes
   useEffect(() => {
-    setMessages(initialMessages);
-    setChatLoadingState("idle");
-    setError({ type: null, message: "" });
-  }, []);
+    setLanguage(activeChatLanguage === "hindi" ? "Hindi" : "English");
+  }, [activeChatLanguage]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
+  // Load chat history whenever the active chat group changes
   useEffect(() => {
     const fetchChatDetails = async () => {
-      if (!user?.chat_group_id) return;
+      if (!activeChatGroupId) return;
 
       setChatLoadingState("loading");
       setError({ type: null, message: "" });
       setMessages(initialMessages);
 
       try {
-        const chatDetails = await chatApi.getChatDetails(user.chat_group_id);
+        const chatDetails = await chatApi.getChatDetails(activeChatGroupId);
         setMessages([...initialMessages, ...(chatDetails.data.messages ?? [])]);
         setChatLoadingState("idle");
       } catch (error: unknown) {
@@ -145,20 +124,33 @@ const ChatPage: React.FC = () => {
     };
 
     fetchChatDetails();
-  }, [user]);
+  }, [activeChatGroupId]);
+
+  const toggleLanguage = () => {
+    const newLanguage = language === "English" ? "Hindi" : "English";
+    const newLangKey = newLanguage.toLowerCase(); // "english" or "hindi"
+
+    // Resolve which group ID to activate
+    const targetGroupId =
+      newLangKey === "english" ? englishChatGroupId : hindiChatGroupId;
+
+    if (!targetGroupId) {
+      console.warn("No chat group found for language:", newLangKey);
+      return;
+    }
+
+    // Switch to that language's chat group — history reloads via useEffect
+    setActiveChatGroup(targetGroupId, newLangKey);
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     const target = e.target;
     setInputMessage(target.value);
 
-    // Reset height to auto to get the correct scrollHeight when shrinking
     target.style.height = "auto";
-
-    // Set the height based on scrollHeight
     const newHeight = target.scrollHeight;
     target.style.height = `${newHeight}px`;
 
-    // Toggle scroll class based on max-height (150px)
     if (newHeight > 150) {
       target.classList.add("has-scroll");
     } else {
@@ -179,10 +171,8 @@ const ChatPage: React.FC = () => {
     const trimmedMessage = inputMessage.trim();
     if (!trimmedMessage) return;
 
-    // Clear any previous errors
     setError({ type: null, message: "" });
 
-    // Add user message
     const userMessage: Message = {
       message: trimmedMessage,
       role: "user",
@@ -191,34 +181,27 @@ const ChatPage: React.FC = () => {
     setMessages((prev) => [...prev, userMessage]);
     setInputMessage("");
 
-    // Reset textarea height and scrolling state
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.classList.remove("has-scroll");
     }
 
-    // Show typing indicator
     setIsTyping(true);
 
     try {
       const botResponseText = await chatApi.sendChatMessage({
-        chat_group_id: user?.chat_group_id ?? null,
-        isNewChat: user?.chat_group_id ? false : true,
+        chat_group_id: activeChatGroupId,
+        isNewChat: activeChatGroupId ? false : true,
         message: trimmedMessage,
       });
 
-      // if (!user?.chat_group_id) {
-      //   const chatDetails = await chatApi.getChatDetails(
-      //     botResponseText.data?.chat_group_id || "",
-      //   );
-
-      //   setPageTitle(chatDetails.data.title);
-      //   navigate(`/chat/${botResponseText.data?.chat_group_id}`, {
-      //     replace: true,
-      //   });
-      //   getChatHistory();
-      //   setCurrentChatId(botResponseText.data?.chat_group_id);
-      // }
+      // If a new group was created (isNewChat), update the active group in context
+      if (!activeChatGroupId && botResponseText.data?.chat_group_id) {
+        setActiveChatGroup(
+          botResponseText.data.chat_group_id,
+          botResponseText.data.chat_language ?? "english"
+        );
+      }
 
       const botMessage: Message = {
         message: botResponseText.data?.assistant_message.message || "",
@@ -249,55 +232,13 @@ const ChatPage: React.FC = () => {
     }
   };
 
-  // const handleNewChat = (): void => {
-  //   fetchedRef.current = null;
-  //   navigate("/chat");
-  //   setIsSidebarOpen(false);
-  // };
-
-  // const handleLoadChat = (chatId: string): void => {
-  //   setIsSidebarOpen(false);
-  //   navigate(`/chat/${chatId}`);
-  // };
-
   const handleLogout = (): void => {
-    // if (window.confirm("Are you sure you want to logout?")) {
     logout();
-    // }
   };
 
   const toggleSidebar = (): void => {
     setIsSidebarOpen((prev) => !prev);
   };
-
-  //   const formatTime = (date: Date): string => {
-  //     const now = new Date();
-  //     const diff = now.getTime() - date.getTime();
-  //     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-  //     if (days === 0) {
-  //       return date.toLocaleTimeString("en-US", {
-  //         hour: "2-digit",
-  //         minute: "2-digit",
-  //       });
-  //     } else if (days === 1) {
-  //       return "Yesterday";
-  //     } else if (days < 7) {
-  //       return `${days} days ago`;
-  //     } else {
-  //       return date.toLocaleDateString("en-US", {
-  //         month: "short",
-  //         day: "numeric",
-  //       });
-  //     }
-  //   };
-
-  // const handleRetryLoadChat = () => {
-  //   if (chatId) {
-  //     fetchedRef.current = null; // Reset fetch ref to allow retry
-  //     fetchChatDetails();
-  //   }
-  // };
 
   return (
     <>
@@ -327,6 +268,9 @@ const ChatPage: React.FC = () => {
           </div>
 
           <LanguageToggle language={language} onToggle={toggleLanguage} />
+
+
+
 
           <div className="sidebar-footer">
             <SupportMenu />
@@ -451,7 +395,6 @@ const ChatPage: React.FC = () => {
                 </div>
               )}
 
-              {/* Inline Error State - After messages */}
               {chatLoadingState === "error" && (
                 <div className="message message--assistant">
                   <div className="message__avatar">⚠️</div>
